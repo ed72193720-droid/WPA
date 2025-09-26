@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Generador de Tareas</title>
 <style>
-  body{font-family:Arial,Helvetica,sans-serif;background:#7c839e;margin:0;padding:24px;display:flex;justify-content:center}
+  body{font-family:Arial,Helvetica,sans-serif;background:#6a6ab7;margin:0;padding:24px;display:flex;justify-content:center}
   .app{width:100%;max-width:600px}
   h1{font-size:1.2rem;margin-bottom:12px}
-  .card{background:#95b3c6;border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,0.08);margin-bottom:16px}
+  .card{background:#c6c6ed;border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,0.08);margin-bottom:16px}
   input[type="text"]{padding:8px;border-radius:6px;border:1px solid #ccc;font-size:1rem;width:100%}
   .controls{margin-top:10px;display:flex;gap:8px;justify-content:flex-end}
   button{background:#2563eb;color:#f0eaea;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
@@ -30,7 +30,6 @@
           <button id="addBtn" type="button">Agregar</button>
           <button id="updateBtn" type="button" class="ghost" style="display:none">Actualizar</button>
           <button id="cancelEditBtn" type="button" class="ghost" style="display:none">Cancelar</button>
-          <button id="saveLocalBtn" type="button" class="ghost">Guardar local</button>
         </div>
       </form>
     </section>
@@ -42,7 +41,6 @@
   </main>
 
 <script>
-const STORAGE_KEY = 'tasks_minimal';
 let tasks = [];
 let editId = null;
 
@@ -50,15 +48,9 @@ const titleEl = document.getElementById('title');
 const addBtn = document.getElementById('addBtn');
 const updateBtn = document.getElementById('updateBtn');
 const cancelEditBtn = document.getElementById('cancelEditBtn');
-const saveLocalBtn = document.getElementById('saveLocalBtn');
 const tasksContainer = document.getElementById('tasksContainer');
 
-// cargar
-try {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw) tasks = JSON.parse(raw);
-} catch { tasks = []; }
-
+// renderizar
 renderTasks();
 
 // agregar
@@ -86,12 +78,6 @@ function cancelEdit(){
   editId=null; clearForm();
   addBtn.style.display='inline-block'; updateBtn.style.display='none'; cancelEditBtn.style.display='none';
 }
-
-// guardar en local
-saveLocalBtn.onclick = () => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-  alert('Guardado en localStorage.');
-};
 
 // renderizar
 function renderTasks(){
